@@ -29,4 +29,12 @@ public class PlayerController : MonoBehaviour {
 		// movement に speed を乗じたものを伴う Rigidbody2D rb2d の AddForce 関数を呼び出します。
 		rb2d.AddForce (movement * speed);
 	}
+
+	void OnTriggerEnter2D(Collider2D other) 
+	{
+		if(other.gameObject.CompareTag("PickUp"))
+		{
+			other.gameObject.SetActive(false);
+		}
+	}
 }

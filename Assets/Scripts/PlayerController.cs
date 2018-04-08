@@ -1,17 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
 	public float speed;             //プレイヤーの移動スピードを格納する Float 変数
 
+	public Text countText;
+	public Text winText;
+
 	private Rigidbody2D rb2d;       // 2D Physics に必要な Rigidbody2D コンポーネントへの参照を格納します。
+
+	private int count;
 
 	// イニシャライライゼーションにこれを使います。
 	void Start()
 	{
 		//Rigidbody2D コンポーネントへの参照を取得、格納して、 Rigidbody2D コンポーネントへアクセスできるようにします。
 		rb2d = GetComponent<Rigidbody2D> ();
+		count = 0;
+		winText.text = "";
+		SetCountText ();
 	}
 
 	//FixedUpdate は決められた間隔で呼び出され、フレームレートとは関係ありません。物理演算のコードをここに置きます。
@@ -35,6 +44,16 @@ public class PlayerController : MonoBehaviour {
 		if(other.gameObject.CompareTag("PickUp"))
 		{
 			other.gameObject.SetActive(false);
+			count = count + 1;
+			SetCountText ();
+		}
+	}
+
+	void SetCountText()
+	{
+		countText.text = "Count: " + count.ToString ();
+		if (count >= 8) {
+			winText.text = "You win!";
 		}
 	}
 }
